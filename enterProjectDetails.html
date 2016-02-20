@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>enter project details</title>
+    <link rel="stylesheet" href="mycss.css">
+    <style type="text/css">
+
+    </style>
+    <script type="text/javascript">
+
+    </script>
+
+  </head>
+  <body>
+    <div class="header">
+      <h1 id="header_site_name">GetMyProject</h1>
+    </div>
+
+    <form action="uploadSuccessfull.html" method="get" id="detail_from">
+      <div>
+        <div class="form_element">
+          <h1>subject name</h1>
+        </div>
+        <div class="form_element">
+          <input list="sub_list" name="subject">
+          <datalist id="sub_list">
+            <option value="Software Engineering">
+            <option value="Web Technology">
+            <option value="Computer Programming - java">
+          </datalist>
+        </div>
+      </div>
+
+      <div>
+        <div class="form_element">
+          <h1>key feature</h1>
+        </div>
+        <div class="form_element">
+          <input list="feature_list" name="feature">
+          <datalist id="feature_list">
+            <option value="HTML">
+            <option value="Java">
+            <option value="Python">
+            <option value="javascript">
+          </datalist>
+        </div>
+      </div>
+
+      <div>
+        <div class="form_element">
+          <h1>project description</h1>
+        </div>
+        <div class="form_element">
+          <textarea rows="5" cols="40" name="desc"></textarea>
+        </div>
+      </div>
+
+      <div>
+        <div class="form_element">
+          <h1>implemented?</h1>
+        </div>
+        <div class="form_element">
+          <input type="radio" name="impl" value="yes"> Yes<br>
+          <input type="radio" name="impl" value="no"> No<br>
+        </div>
+      </div>
+
+      <input type="submit" value="submit">
+    </form>
+    <div class="footer">
+      <p>Parag Pachpute</p>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,34 @@
+h1{
+    color: #B28F4F;
+}
+
+body{
+  margin: 0px;
+}
+
+.header{
+  height: 100px;
+  background-color: #644C37;
+  text-align: center;
+}
+
+.footer{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height = 25px;
+  background-color: #644C37;
+  text-align: center;
+  color: white;
+}
+
+#header_site_name{
+  margin: 0px;
+  padding-top: 15px;
+  color: white;
+  font-size: 50px;
+}
+
+.form_element{
+  display: inline-block;
+}

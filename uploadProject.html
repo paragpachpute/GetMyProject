@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>upload project</title>
+    <link rel="stylesheet" href="mycss.css">
+    <style type="text/css">
+
+    </style>
+    <script type="text/javascript">
+
+    </script>
+
+  </head>
+  <body>
+      <div class="header">
+        <h1 id="header_site_name">GetMyProject</h1>
+      </div>
+
+      <form action="enterProjectDetails.html" method="get">
+        <div>
+          <div class="form_element">
+            <h1>Select Branch</h1>
+          </div>
+
+          <div class="form_element">
+            <input list="branch_list" name="branch">
+            <datalist id="branch_list">
+              <option value="Computer Science">
+              <option value="Information Technology">
+              <option value="Electronics">
+            </datalist>
+          </div>
+        </div>
+
+        <div>
+          <div class="form_element">
+            <h1>Select Semester</h1>
+          </div>
+
+          <div class="form_element">
+            <input list="sem_list" name="sem">
+            <datalist id="sem_list">
+              <option value="1">
+              <option value="2">
+              <option value="3">
+            </datalist>
+          </div>
+        </div>
+
+        <div>
+          <div class="form_element">
+            <h1>Project Name</h1>
+          </div>
+
+          <div class="form_element">
+            <input type="text" name="proj_name">
+          </div>
+        </div>
+
+        <div>
+          <div class="form_element">
+            <h1>File Format</h1>
+          </div>
+
+          <div class="form_element">
+            <input list="format_list" name="format">
+            <datalist id="format_list">
+              <option value="PDF">
+              <option value="DOC">
+              <option value="PPT">
+              <option value="ZIP">
+            </datalist>
+          </div>
+        </div>
+
+        <div>
+          <div class="form_element">
+            <input type="button" value="upload file">
+          </div>
+          <div class="form_element">
+            <input type="submit" value="next">
+          </div>
+        </div>
+      </form>
+
+      <div class="footer">
+        <p>Parag Pachpute</p>
+      </div>
+
+  </body>
+</html>
