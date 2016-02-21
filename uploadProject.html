@@ -7,7 +7,35 @@
 
     </style>
     <script type="text/javascript">
+      function validate(){
+        var branch = document.myForm.branch.value;
+        var sem = document.myForm.sem.value;
+        var proj_name = document.myForm.proj_name.value;
+        var format = document.myForm.format.value;
 
+        if(branch == ""){
+          document.myForm.branch.focus();
+          document.myForm.branch.placeholder = 'please enter branch';
+          return false;
+        }
+        if(sem == ""){
+          document.myForm.sem.focus();
+          document.myForm.sem.placeholder = 'please enter semester';
+          return false;
+        }
+        if(proj_name == ""){
+          document.myForm.proj_name.focus();
+          document.myForm.proj_name.placeholder = 'please enter project name';
+          return false;
+        }
+        if(format == ""){
+          document.myForm.format.focus();
+          document.myForm.format.placeholder = 'please enter format';
+          return false;
+        }
+
+        return true;
+      }
     </script>
 
   </head>
@@ -16,7 +44,7 @@
         <h1 id="header_site_name">GetMyProject</h1>
       </div>
 
-      <form action="enterProjectDetails.html" method="get">
+      <form action="enterProjectDetails.html" name="myForm" onsubmit="return(validate())" method="get" autocomplete="on">
         <div>
           <div class="form_element">
             <h1>Select Branch</h1>
