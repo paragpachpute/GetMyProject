@@ -7,7 +7,35 @@
 
     </style>
     <script type="text/javascript">
+      function validate(){
+        var subject = document.myForm.subject.value;
+        var feature = document.myForm.feature.value;
+        var desc = document.myForm.desc.value;
+        var impl = document.myForm.impl.value;
 
+        if(subject == ""){
+          document.myForm.subject.focus();
+          document.myForm.subject.placeholder = 'please enter subject';
+          return false;
+        }
+        if(feature == ""){
+          document.myForm.feature.focus();
+          document.myForm.feature.placeholder = 'please enter feature';
+          return false;
+        }
+        if(desc == ""){
+          document.myForm.desc.focus();
+          document.myForm.desc.placeholder = 'please enter description';
+          return false;
+        }
+
+        if(document.getElementById('rYes').checked == false && document.getElementById('rNo').checked == false){
+          alert('please enter did you implemented it?');
+          return false;
+        }
+
+        return true;
+      }
     </script>
 
   </head>
@@ -16,7 +44,7 @@
       <h1 id="header_site_name">GetMyProject</h1>
     </div>
 
-    <form action="uploadSuccessfull.html" method="get" id="detail_from">
+    <form action="uploadSuccessfull.html" onsubmit="return(validate())" name="myForm" autocomplete="on" method="get" id="detail_from">
       <div>
         <div class="form_element">
           <h1>subject name</h1>
@@ -60,8 +88,8 @@
           <h1>implemented?</h1>
         </div>
         <div class="form_element">
-          <input type="radio" name="impl" value="yes"> Yes<br>
-          <input type="radio" name="impl" value="no"> No<br>
+          <input type="radio" name="impl" value="yes" id="rYes"> Yes<br>
+          <input type="radio" name="impl" value="no" id="rNo"> No<br>
         </div>
       </div>
 

@@ -7,7 +7,20 @@
 
     </style>
     <script type="text/javascript">
+      function validate(){
+        var proj_name = document.myForm.proj_name.value;
+        var branch = document.myForm.branch.value;
+        var sem = document.myForm.sem.value;
+        var subject = document.myForm.subject.value;
+        var desc = document.myForm.desc.value;
 
+        if(proj_name == "" && branch == "" && sem == "" && subject == "" && desc == "" ){
+          alert('please enter either project name or project details...');
+          return false;
+        }
+
+        return true;
+      }
     </script>
 
   </head>
@@ -17,7 +30,7 @@
       </div>
 
       <div class="content">
-        <form action="searchResult.html" method="get">
+        <form action="searchResult.html" method="get" name="myForm" onsubmit="return(validate())" autocomplete="on">
           <div>
             <div class="form_element">
               <h1>Enter Name of Project </h1>
