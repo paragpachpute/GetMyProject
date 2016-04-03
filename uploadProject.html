@@ -44,7 +44,7 @@
         <h1 id="header_site_name">GetMyProject</h1>
       </div>
 
-      <form action="enterProjectDetails.html" name="myForm" onsubmit="return(validate())" method="get" autocomplete="on">
+      <form action="enterProjectDetails.php" name="myForm" onsubmit="return(validate())" method="post" autocomplete="on">
         <div>
           <div class="form_element">
             <h1>Select Branch</h1>
@@ -53,9 +53,9 @@
           <div class="form_element">
             <input list="branch_list" name="branch">
             <datalist id="branch_list">
-              <option value="Computer Science">
-              <option value="Information Technology">
-              <option value="Electronics">
+              <option value="computer">
+              <option value="IT">
+              <option value="electronics">
             </datalist>
           </div>
         </div>
@@ -71,6 +71,11 @@
               <option value="1">
               <option value="2">
               <option value="3">
+              <option value="4">
+              <option value="5">
+              <option value="6">
+              <option value="7">
+              <option value="8">  
             </datalist>
           </div>
         </div>
@@ -93,21 +98,16 @@
           <div class="form_element">
             <input list="format_list" name="format">
             <datalist id="format_list">
-              <option value="PDF">
-              <option value="DOC">
-              <option value="PPT">
-              <option value="ZIP">
+              <option value="pdf">
+              <option value="doc">
+              <option value="ppt">
+              <option value="zip">
             </datalist>
           </div>
         </div>
 
-        <div>
-          <div class="form_element">
-            <input type="button" value="upload file">
-          </div>
-          <div class="form_element">
-            <input type="submit" value="next">
-          </div>
+        <div class="form_element">
+          <input type="submit" value="next">
         </div>
       </form>
 
