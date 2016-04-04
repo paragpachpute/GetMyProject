@@ -1,3 +1,6 @@
+<?php
+  session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -51,6 +54,21 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="active"><a href="index.php">Home</a></li>
                 <li><a href="uiUploadProject.php">Upload Project</a></li>
+                <?php
+                  if(isset($_SESSION['state'])){
+                    if($_SESSION['state'] == 'no' or $_SESSION['state'] == ''){
+                      echo '<li><a href="register.php">Sign Up</a></li>';
+                      echo '<li><a href="login.php">Log In</a></li>';
+                    }else{
+                      echo '<li><a href="register.php">Hi ' . $_SESSION['name'] . '</a></li>';
+                      echo '<li><a href="destroy.php">Log Out</a></li>';
+                    }
+                  }else{
+                    echo '<li><a href="register.php">Sign Up</a></li>';
+                    echo '<li><a href="login.php">Log In</a></li>';
+                  }
+                  
+                ?>
                 <!-- <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
                   <ul class="dropdown-menu">
@@ -96,6 +114,7 @@
           $id = $_GET['id'];
 
           $proj = new Project;
+          $proj ->incViews($id);
           $result = $proj -> getResultById($id);
 
           if($result -> num_rows > 0){
@@ -109,8 +128,31 @@
             $impl = $row['impl'];
             $datetime = $row['datetime'];
             $fname = $row['filename'];
+            $ssname = $row['s1'];
             $dlink = "http://127.0.0.1/files/" . $fname;
           }  
+
+          $result = $proj -> getTop3();
+
+          $row = $result -> fetch_assoc();
+          $img1 = $row['s1'];
+          $name1 = $row['name'];
+          $desc1 = $row['description'];
+          $id1 = $row['id'];
+          // echo $desc1;
+
+          $row = $result -> fetch_assoc();
+          $img2 = $row['s1'];
+          $name2 = $row['name'];
+          $desc2 = $row['description'];
+          $id2 = $row['id'];
+          // echo $desc2;
+
+          $row = $result -> fetch_assoc();
+          $img3 = $row['s1'];
+          $name3 = $row['name'];
+          $desc3 = $row['description'];
+          $id3 = $row['id'];
 
     ?>
 
@@ -270,9 +312,12 @@
                         <img src="" alt="" />
                     </div>
                     <div class="content">
-                        <p>Web Developer <br>
-                           More description here</p>
-                        <p><button type="button" class="btn btn-default">Contact</button></p>
+                        <p><?php echo $desc1 ?></p>
+                        <p>
+                            <a href="uiProjectDetails.php?id=<?php echo $id1 ?>">
+                                <button type="button" class="btn btn-default">View</button>
+                            </a>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -283,9 +328,12 @@
                         <img src="" alt="" />
                     </div>
                     <div class="content">
-                        <p>Web Developer <br>
-                           More description here</p>
-                        <p><button type="button" class="btn btn-default">Contact</button></p>
+                        <p><?php echo $desc2 ?></p>
+                        <p>
+                            <a href="uiProjectDetails.php?id=<?php echo $id2 ?>">
+                                <button type="button" class="btn btn-default">View</button>
+                            </a>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -296,9 +344,12 @@
                         <img src="" alt="" />
                     </div>
                     <div class="content">
-                        <p>Web Developer <br>
-                           More description here</p>
-                        <p><button type="button" class="btn btn-default">Contact</button></p>
+                        <p><?php echo $desc3 ?></p>
+                        <p>
+                            <a href="uiProjectDetails.php?id=<?php echo $id3 ?>">
+                                <button type="button" class="btn btn-default">View</button>
+                            </a>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -307,10 +358,12 @@
     </div>
 </div>
 
-<img class="src-image" src="images/monorail.jpg">
-<img class="src-image" src="images/kbc_logo.png">
-<img class="src-image" src="images/monorail.jpg">
-<img class="src-image" src="images/monorail.jpg">
+
+
+<img class="src-image" src="images/<?php echo $ssname ?>">
+<img class="src-image" src="images/<?php echo $img1 ?>">
+<img class="src-image" src="images/<?php echo $img2 ?>">
+<img class="src-image" src="images/<?php echo $img3 ?>">
  
     
     <div class="text-center" style="background:#FFF">

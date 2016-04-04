@@ -1,4 +1,6 @@
-
+<?php
+  session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -36,6 +38,89 @@
 <!-- NAVBAR
 ================================================== -->
   <body>
+
+    
+    <?php
+      function __autoload($Project){
+        require_once "projectClass.php";
+      }
+
+      $project = new Project;
+      $result = $project -> getTop3();
+
+      $row = $result -> fetch_assoc();
+      $img1 = $row['s1'];
+      $name1 = $row['name'];
+      $desc1 = $row['description'];
+      // echo $desc1;
+
+      $row = $result -> fetch_assoc();
+      $img2 = $row['s1'];
+      $name2 = $row['name'];
+      $desc2 = $row['description'];
+      // echo $desc2;
+
+      $row = $result -> fetch_assoc();
+      $img3 = $row['s1'];
+      $name3 = $row['name'];
+      $desc3 = $row['description'];
+      // echo $desc3;
+
+      // $_SESSION['state'] = "no";
+
+      if(isset($_POST['uname'])){
+        $email =  $_POST['email'];
+        $pass =  $_POST['pass'];
+        $uname =  $_POST['uname'];
+        $status =  $_POST['status'];
+
+        $user = new User;
+        $result = $user -> register($uname, $status, $email, $pass);
+        if($result != FALSE){
+          echo "<script>alert('Registration Successfull')</script>";
+          $state = "Hi " . $uname;
+          $_SESSION['state'] = "yes";
+          $_SESSION['name'] = $uname;
+          $_SESSION['id'] = $user -> getIdFromEmail($email);
+        }else{
+          echo "<script>alert('Registration Not successfull')</script>";
+        }
+      }  
+      else if(isset($_POST['email'])){
+        $email =  $_POST['email'];
+        $pass =  $_POST['pass'];
+
+        $user = new User;
+        $result = $user -> validate($email, $pass);
+        if($result == TRUE){
+          $_SESSION['state'] = "yes";
+          $_SESSION['name'] = $user -> getNameFromEmail($email);
+          $_SESSION['id'] = $user -> getIdFromEmail($email);
+        }else{
+          echo "<script>alert('invalid credentials')</script>";
+          $state = "Log In";
+        }
+      }
+
+      $user = new User;
+      $result = $user -> getTop3();
+      
+      $row = $result -> fetch_assoc();
+      $uname1 = $row['name'];
+      $status1 = $row['status'];
+
+      $row = $result -> fetch_assoc();
+      $uname2 = $row['name'];
+      $status2 = $row['status'];
+
+      $row = $result -> fetch_assoc();
+      $uname3 = $row['name'];
+      $status3 = $row['status'];
+
+
+
+    ?>
+
     <nav class="navbar navbar-inverse">
           <div class="container" style="min-height:auto">
             <div class="navbar-header">
@@ -51,6 +136,21 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="active"><a href="index.php">Home</a></li>
                 <li><a href="uiUploadProject.php">Upload Project</a></li>
+                <?php
+                  if(isset($_SESSION['state'])){
+                    if($_SESSION['state'] == 'no' or $_SESSION['state'] == ''){
+                      echo '<li><a href="register.php">Sign Up</a></li>';
+                      echo '<li><a href="login.php">Log In</a></li>';
+                    }else{
+                      echo '<li><a href="register.php">Hi ' . $_SESSION['name'] . '</a></li>';
+                      echo '<li><a href="destroy.php">Log Out</a></li>';
+                    }
+                  }else{
+                    echo '<li><a href="register.php">Sign Up</a></li>';
+                    echo '<li><a href="login.php">Log In</a></li>';
+                  }
+                  
+                ?>
                 <!-- <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
                   <ul class="dropdown-menu">
@@ -67,7 +167,6 @@
             </div>
           </div>
         </nav>
-    
 
 
     <!-- Carousel
@@ -156,24 +255,23 @@
       <div class="row">
         <div class="col-lg-4">
           <img class="img-circle" src="images/profilepic2.jpg" width="140" height="140">
-          <h2>Paras Avkirkar</h2>
-          <p>I love competitive programming. Still in the process to have a good control on it. I like understanding and learning stuff related to Computer Science.</p>
+          <h2><?php echo $uname1 ?></h2>
+          <p><?php echo $status1 ?></p>
           <!-- <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p> -->
         </div><!-- /.col-lg-4 -->
         <div class="col-lg-4">
           <img class="img-circle" src="images/profilepic3.jpg" width="140" height="140">
-          <h2>Pranay Patil</h2>
-          <p>Worked as Application Developer at VJTI Alumni Association. Interested in Java, Python, JavaScript, C, HTML, PHP, Sql, Data Structures, Algorithm Design, Android Development, Pygame</p>
+          <h2><?php echo $uname2 ?></h2>
+          <p><?php echo $status2 ?></p>
           <!-- <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p> -->
         </div><!-- /.col-lg-4 -->
         <div class="col-lg-4">
           <img class="img-circle" src="images/profilepic4.jpg" width="140" height="140">
-          <h2>Rahul Jeswani</h2>
-          <p>Student at Veermata Jijabai Technological Institute, Mumbai. Passionate about Learning, interested in cricket, WWE. </p>
+          <h2><?php echo $uname3 ?></h2>
+          <p><?php echo $status3 ?></p>
           <!-- <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p> -->
         </div><!-- /.col-lg-4 -->
       </div><!-- /.row -->
-
 
       <!-- START THE FEATURETTES -->
 
@@ -183,13 +281,13 @@
       
       <div class="row featurette">
         <div class="col-md-7">
-          <h2 class="featurette-heading"><span class="text-muted">Kaun Banega Crorepati</span></h2>
+          <h2 class="featurette-heading"><span class="text-muted"><?php echo $name1 ?></span></h2>
           <br>
-          <p class="lead"> Kaun Banega Crorepati (Who will become a Millionaire; popularly known as KBC) is an Indian television game show based on the UK game show Who Wants to Be a Millionaire?. The show has won popularity all over the world. KBC was played on various channels in Pakistan and was hugely followed by Pakistani audience. The show also won acclaim in UK, USA and Canada.Unlike other versions of the program, KBC intersperses the playing of the game with Bollywood style musical numbers and other entertainment.</p>
+          <p class="lead"><?php echo $desc1 ?></p>
         </div>
         <div class="col-md-5">
           <a href="uiProjectDetails.php?id=1">
-            <img class="featurette-image img-responsive center-block" src="images/kbc_logo.png" alt="Generic placeholder image" >
+            <img class="featurette-image img-responsive center-block" src="images/<?php echo $img1 ?>" alt="Generic placeholder image" >
           </a>
         </div>
       </div>
@@ -199,13 +297,13 @@
 
       <div class="row featurette">
         <div class="col-md-7 col-md-push-5">
-          <h2 class="featurette-heading"><span class="text-muted">HighTech Classroom</span></h2>
+          <h2 class="featurette-heading"><span class="text-muted"><?php echo $name2 ?></span></h2>
           <br>
-          <p class="lead">The primary goal of proposed system, HTC, is to cybernate and automate the current manual system. This facilitates current education process. Reduces human interruption and its flaws. </p>
+          <p class="lead"><?php echo $desc2 ?></p>
         </div>
         <div class="col-md-5 col-md-pull-7">
           <a href="uiProjectDetails.php?id=4">
-            <img class="featurette-image img-responsive center-block" src="images/htc.png" alt="Generic placeholder image">
+            <img class="featurette-image img-responsive center-block" src="images/<?php echo $img2 ?>" alt="Generic placeholder image">
           </a>  
         </div>
       </div>
@@ -214,17 +312,12 @@
 
       <div class="row featurette">
         <div class="col-md-7">
-          <h2 class="featurette-heading"><span class="text-muted">Monorail Ticket Booking System</span></h2><br>
-          <p class="lead">“Mono Rail Ticket Booking System” is an attempt to simulate the basic concepts of an online Ticket Booking system. The system enables to perform the following functions:
-1. Search For Train
-2. Booking of A ticket
-3. Payment
-4. Cancellation 
-</p>
+          <h2 class="featurette-heading"><span class="text-muted"><?php echo $name3 ?></span></h2><br>
+          <p class="lead"><?php echo $desc3 ?></p>
         </div>
         <div class="col-md-5">
           <a href="uiProjectDetails.php?id=9">
-           <img class="featurette-image img-responsive center-block" src="images/monorail.jpg" alt="Generic placeholder image">
+           <img class="featurette-image img-responsive center-block" src="images/<?php echo $img3 ?>" alt="Generic placeholder image">
           </a> 
         </div>
       </div>

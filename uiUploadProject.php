@@ -1,3 +1,6 @@
+<?php
+  session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -52,6 +55,21 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="active"><a href="index.php">Home</a></li>
                 <li><a href="uiUploadProject.php">Upload Project</a></li>
+                <?php
+                  if(isset($_SESSION['state'])){
+                    if($_SESSION['state'] == 'no' or $_SESSION['state'] == ''){
+                      echo '<li><a href="register.php">Sign Up</a></li>';
+                      echo '<li><a href="login.php">Log In</a></li>';
+                    }else{
+                      echo '<li><a href="register.php">Hi ' . $_SESSION['name'] . '</a></li>';
+                      echo '<li><a href="destroy.php">Log Out</a></li>';
+                    }
+                  }else{
+                    echo '<li><a href="register.php">Sign Up</a></li>';
+                    echo '<li><a href="login.php">Log In</a></li>';
+                  }
+                  
+                ?>
                 <!-- <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
                   <ul class="dropdown-menu">
@@ -185,10 +203,33 @@
                       </div>
                   </div>
 
-                  <input type="file" class="btn btn-primary" name="f" id="f" required>
+                  <div class="form-group">
+                    <label for="InputMessage">Project File</label>
+                    <input type="file" class="btn btn-primary" name="f" id="f" required>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="InputMessage">Screen Shot</label>
+                    <input type="file" class="btn btn-primary" name="screenshot" id="screenshot">
+                  </div>
+
+                  <?php 
+                      if(isset($_SESSION['id'])){
+                        echo '<input type="hidden" name="uid" value='.$_SESSION['id'].'>' ;
+                      }
+                  ?>    
 
                   <div class="form-group" style="height:50px;">
-                    <input type="submit" name="submit" id="submit" value="Submit" class="btn btn-info pull-right" >
+                    <input type="submit" 
+                    <?php 
+                      if(isset($_SESSION['id'])){
+                        
+                      }else{
+                        echo ' disabled="disabled" ';
+                      } 
+
+                    ?>
+                    name="submit" id="submit" value="Submit" class="btn btn-info pull-right" >
                   </div>
               </div>  
               

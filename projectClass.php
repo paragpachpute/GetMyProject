@@ -52,21 +52,44 @@
 			return $result;
 		}
 
+		function incViews($id){
+			$db = new DB;
+			$conn = $db -> connect();
+
+			$query = "update project set views=(views+1) where id=" . $id;
+			
+			$result = $conn -> query($query);
+			return $result;
+		}
+
 		function getResultById($id){
 			$db = new DB;
 			$conn = $db -> connect();
 
-			$query = "select * from project where id=" . $id;
+			$query = "SELECT * from project where id=" . $id;
 
 			$result = $conn -> query($query);
 			return $result;
 		}
 
-		function insertIntoDB($name, $subject, $sem, $branch, $format, $description,
-			$filename, $impl){
+		function getTop3(){
+			$db = new DB;
+			$conn = $db -> connect();
+
+			$query = "SELECT * from project ORDER by views desc limit 3";
+
+			$result = $conn -> query($query);
+			return $result;
+		}
+
+		function insertIntoDB($uid, $name, $subject, $sem, $branch, $format, $description,
+			$filename, $impl, $ssname){
 
 			$db = new DB;
 			$conn = $db -> connect();
+
+			if($ssname == "")
+				$ssname = "proj-img.jpg";
 
 			echo "name = " . $name . "<br>";
 			echo "subject = " . $subject . "<br>";
@@ -77,15 +100,17 @@
 			echo "filename = " . $filename . "<br>";
 			echo "impl = " . $impl . "<br>";
 
-			$query = "insert into project values ('', '" .
-				$branch . "', " . $sem . ", '" .
+			$query = "insert into project (`id`, `branch`, `sem`, `userId`, `format`, `name`, `subject`, `description`, `impl`, `filename`, `datetime`, `s1`) values ('', '" .
+				$branch . "', " . $sem . ", " .
+				$uid . ", '" .
 				$format . "', '" .
 				$name . "', '" .
-				$subject . "', '" .
-				$description . "', '" .
+				$subject . "', \"" .
+				$description . "\", '" .
 				$impl . "', '" .
 				$filename . "'" .
-				", now());";
+				", now(), '" . 
+				$ssname . "');";
 			echo $query . "<br>";
 
 			$result = $conn -> query($query);
@@ -197,6 +222,72 @@
 			$result = $conn -> query($query);
 			$row = $result -> fetch_assoc();
 			return $row['type'];
+		}
+	}
+
+	class User{
+		function register($name, $status, $email, $pass){
+			$db = new DB;
+			$conn = $db -> connect();
+
+			$query = "INSERT INTO `user`(`name`, `email`, `pass`, `status`) VALUES ('" . 
+				$name . "', '" .
+				$email . "', '" .
+				$pass . "', '" .
+				$status . "')";
+
+			$result = $conn -> query($query);
+			return $result;
+		}
+
+		function validate($email, $pass){
+			$db = new DB;
+			$conn = $db -> connect();
+
+			$query = "select * from user where email='" . $email . "' and pass='" . $pass . "'";
+
+			$result = $conn -> query($query);
+			if($result -> num_rows > 0 ){
+				return TRUE;
+			}else{
+				return FALSE;
+			}
+			
+		}
+
+		function getNameFromEmail($email){
+			$db = new DB;
+			$conn = $db -> connect();
+
+			$query = "select name from user where email='" . $email . "'";
+
+			$result = $conn -> query($query);
+			$row = $result -> fetch_assoc();
+			return $row['name'];
+		}
+
+		function getIdFromEmail($email){
+			$db = new DB;
+			$conn = $db -> connect();
+
+			$query = "select id from user where email='" . $email . "'";
+
+			$result = $conn -> query($query);
+			$row = $result -> fetch_assoc();
+			return $row['id'];
+		}
+
+		function getTop3(){
+			$db = new DB;
+			$conn = $db -> connect();
+
+			$query = "select user.name, user.status, count(user.id) as c 
+				from user join project on(user.id = project.userId) 
+				group by userId 
+				order by c desc";
+
+			$result = $conn -> query($query);
+			return $result;
 		}
 	}
 

@@ -16,8 +16,6 @@
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/search.css" rel="stylesheet">
-    <link href="css/font-awesome.css" rel="stylesheet">
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <!--<link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet"> -->
@@ -35,10 +33,11 @@
 
     <!-- Custom styles for this template -->
     <link href="carousel.css" rel="stylesheet">
+    <link href="css/register.css" rel="stylesheet">
   </head>
 <!-- NAVBAR
 ================================================== -->
-  <body >
+  <body style="background: url(images/register_bg.jpg) no-repeat center center fixed">
     <nav class="navbar navbar-inverse">
           <div class="container" style="min-height:auto">
             <div class="navbar-header">
@@ -85,123 +84,51 @@
             </div>
           </div>
         </nav>
+    
+    <?php
+      function __autoload($Project){
+        require_once "projectClass.php";
+      }
 
-    <div class="row" style="margin-left:25px; margin-right:25px;">
-      <div class="col-lg-0"></div>
-      <div class="col-lg-12" >
-
-        <?php
-          function __autoload($Project){
-            require_once "projectClass.php";
-          }
-
-          $val = $_GET['search'];
-
-          $proj = new Project;
-          $result = $proj -> getResultByVal($val);
-
-          if($result -> num_rows > 0){
-            while($row = $result -> fetch_assoc()){
-              echo "<h2><a href='uiProjectDetails.php?id=" . $row['id'] . "'>
-                " .$row['name'] . "</a></h2>"; 
-              echo "<p class='lead'><i class='fa fa-user'></i> by <a href=''>Super User</a></p>";
-              // echo "<br>";
-              echo "<p><i class='fa fa-calendar'></i> Posted on " . $row['datetime'] . "</p>";
-              
-              $id = $row['id'];
-              $hasF = new hasFeature;
-              $resultHasF = $hasF -> getFeatureByProjId($id);
-              if($resultHasF != null){
-                echo "<p><i class='fa fa-tags'></i> Tags: ";
-                while($rowHasF = $resultHasF->fetch_assoc()){
-                  echo "<a href=''><span class='badge badge-info'>" .
-                    $hasF->getFeatureNameById($rowHasF['featureId']) . "</span></a> ";
-                }
-                echo "</p>";
-              }
-
-              echo "<p data-toggle='collapse' 
-                data-target='#desc" . $row['id'] . "'><i class='fa fa-file-text'></i> Description:";
-              echo "<div id='desc" . $row['id'] . "' class='collapse'>" . $row['description'] . "</div>";
-              echo "</p>";
-
-              echo "<hr>";
-          //     echo "<h2>branch : " . $row['branch'] . "</h2>";
-          //     echo "<h2>Sem : " . $row['sem'] . "</h2>";
-          //     echo "<h2>Subject : " . $row['subject'] . "</h2>";
-          //     echo "<h2>Desription : " . $row['description'] . "</h2>";
-          //     echo "<h2>format : " . $row['format'] . "</h2>";
-          //     echo "<h2>Download Link : <a href='http://127.0.0.1/files/" . $row['filename'] . "'>" . $row['name'] . "</a></h2>"; 
+    ?>
+    
+    <div class="container">
+  
+    <div class="row" id="pwd-container">
+      <div class="col-md-4"></div>
+      
+      <div class="col-md-4">
+        <section class="login-form">
+          <form method="post" action="index.php" role="login">
+            <img src="http://i.imgur.com/RcmcLv4.png" class="img-responsive" alt="" />
             
-            //   $id = $row['id'];
-            //   $hasF = new hasFeature;
-            //   $resultHasF = $hasF -> getFeatureByProjId($id);
-            //   if($resultHasF != null){
-            //     echo "<h2>Features :";
-            //     while($rowHasF = $resultHasF->fetch_assoc()){
-            //       echo $hasF->getFeatureNameById($rowHasF['featureId']) . ", ";
-            //     }
-            //     echo "</h2>";
-            //   }
-            //   echo "<br><hr><br>";
-            }
-          }else{
-            echo "<h1>Oops! No result Found...</h1>";
-            echo "<br><br><br>";
-            echo "<h2>Some of our top projects are...</h2>";
-
-            $result = $proj -> getTop3();
-
-            if($result -> num_rows > 0){
-              while($row = $result -> fetch_assoc()){
-                echo "<h2><a href='uiProjectDetails.php?id=" . $row['id'] . "'>
-                  " .$row['name'] . "</a></h2>"; 
-                echo "<p class='lead'><i class='fa fa-user'></i> by <a href=''>Super User</a></p>";
-                // echo "<br>";
-                echo "<p><i class='fa fa-calendar'></i> Posted on " . $row['datetime'] . "</p>";
-                
-                $id = $row['id'];
-                $hasF = new hasFeature;
-                $resultHasF = $hasF -> getFeatureByProjId($id);
-                if($resultHasF != null){
-                  echo "<p><i class='fa fa-tags'></i> Tags: ";
-                  while($rowHasF = $resultHasF->fetch_assoc()){
-                    echo "<a href=''><span class='badge badge-info'>" .
-                      $hasF->getFeatureNameById($rowHasF['featureId']) . "</span></a> ";
-                  }
-                  echo "</p>";
-                }
-
-                echo "<p data-toggle='collapse' 
-                  data-target='#desc" . $row['id'] . "'><i class='fa fa-file-text'></i> Description:";
-                echo "<div id='desc" . $row['id'] . "' class='collapse'>" . $row['description'] . "</div>";
-                echo "</p>";
-
-                echo "<hr>";
-              }
-            }  
-          }  
-
-        ?>
-
-        <!-- <h2><a href="">Blog Post Template for Bootstrap</a></h2>
-        <p class="lead"><i class="fa fa-user"></i> by <a href="">Super User</a></p>
-        <br>
-        <p><i class="fa fa-calendar"></i> Posted on August 24, 2014 at 9:00 PM</p>
-        <p><i class="fa fa-tags"></i> Tags: <a href=""><span class="badge badge-info">Bootstrap</span></a> <a href=""><span class="badge badge-info">Web</span></a> <a href=""><span class="badge badge-info">CSS</span></a> <a href=""><span class="badge badge-info">HTML</span></a></p>
-        <p data-toggle="collapse" data-target="#desc"><i class="fa fa-file-text"></i> Description:
-          <div id="desc" class="collapse">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            <input type="email" name="email" required class="form-control input-lg" placeholder="devs@getmyproject.com" />
+            
+            <input type="password" class="form-control input-lg" name="pass" id="password" placeholder="Password" required="" />
+            
+            
+            <div class="pwstrength_viewport_progress"></div>
+            
+            
+            <button type="submit" name="go" class="btn btn-lg btn-primary btn-block">Sign in</button>
+            <div>
+              <a href="#">Create account</a> or <a href="#">reset password</a>
+            </div>
+            
+          </form>
+          
+          <div class="form-links">
+            <a href="#">www.website.com</a>
           </div>
-        <hr>  -->
+        </section>  
+        </div>
+        
+        <div class="col-md-4"></div>
       </div>
-      <div class="col-lg-0"></div>
-    </div>  
-  </div><!-- /.container -->
+    </div>   
 
-  <div class="text-center" style="background:#FFF">
+
+      <div class="text-center" style="background:#FFF">
     <hr />
       <div class="row">
         <div class="col-lg-12">
@@ -246,11 +173,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/register.js"></script>
     <!-- Just to make our placeholder images work. Don't actually copy the next line! 
     <script src="../../assets/js/vendor/holder.min.js"></script> -->
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug 
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script> -->
 
-    <script src="js/search.js"></script>
   </body>
 </html>
