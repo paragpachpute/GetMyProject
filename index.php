@@ -52,18 +52,21 @@
       $img1 = $row['s1'];
       $name1 = $row['name'];
       $desc1 = $row['description'];
+      $id1 = $row['id'];
       // echo $desc1;
 
       $row = $result -> fetch_assoc();
       $img2 = $row['s1'];
       $name2 = $row['name'];
       $desc2 = $row['description'];
+      $id2 = $row['id'];
       // echo $desc2;
 
       $row = $result -> fetch_assoc();
       $img3 = $row['s1'];
       $name3 = $row['name'];
       $desc3 = $row['description'];
+      $id3 = $row['id'];
       // echo $desc3;
 
       // $_SESSION['state'] = "no";
@@ -286,7 +289,7 @@
           <p class="lead"><?php echo $desc1 ?></p>
         </div>
         <div class="col-md-5">
-          <a href="uiProjectDetails.php?id=1">
+          <a href="uiProjectDetails.php?id=<?php echo $id1 ?>">
             <img class="featurette-image img-responsive center-block" src="images/<?php echo $img1 ?>" alt="Generic placeholder image" >
           </a>
         </div>
@@ -302,7 +305,7 @@
           <p class="lead"><?php echo $desc2 ?></p>
         </div>
         <div class="col-md-5 col-md-pull-7">
-          <a href="uiProjectDetails.php?id=4">
+          <a href="uiProjectDetails.php?id=<?php echo $id2 ?>">
             <img class="featurette-image img-responsive center-block" src="images/<?php echo $img2 ?>" alt="Generic placeholder image">
           </a>  
         </div>
@@ -316,7 +319,7 @@
           <p class="lead"><?php echo $desc3 ?></p>
         </div>
         <div class="col-md-5">
-          <a href="uiProjectDetails.php?id=9">
+          <a href="uiProjectDetails.php?id=<?php echo $id3 ?>">
            <img class="featurette-image img-responsive center-block" src="images/<?php echo $img3 ?>" alt="Generic placeholder image">
           </a> 
         </div>
